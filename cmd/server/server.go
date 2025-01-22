@@ -18,8 +18,8 @@ var (
 	rdb *redis.Client
 )
 
-func preServerRun(cmd *cobra.Command, args []string) {
-
+func preServerRun(cmd *cobra.Command, args []string) error {
+	return nil
 }
 
 func serverRun(cmd *cobra.Command, args []string) error {
