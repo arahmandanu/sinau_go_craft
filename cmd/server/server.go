@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"github.com/gomodule/redigo/redis"
+	"github.com/redis/go-redis/v9"
 	"github.com/spf13/cobra"
 	"net/http"
 	"time"
@@ -15,12 +15,11 @@ var (
 		Short: "Run chat webhook server",
 		Long:  "Run chat webhook server to process incoming message.",
 	}
+	rdb *redis.Client
 )
 
 func preServerRun(cmd *cobra.Command, args []string) {
-	rCon, err := func() (redis.Conn, error) {
-		return redis.Dial("tcp", ":6379")
-	}
+
 }
 
 func serverRun(cmd *cobra.Command, args []string) error {
