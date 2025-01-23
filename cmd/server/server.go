@@ -2,6 +2,8 @@ package server
 
 import (
 	"fmt"
+	"github.com/arahmandanu/sinau_go_craft/config"
+	"github.com/arahmandanu/sinau_go_craft/pkg/background_job"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/cobra"
 	"net/http"
@@ -19,12 +21,25 @@ var (
 )
 
 func preServerRun(cmd *cobra.Command, args []string) error {
+	config.Init()
+	rOpt, err := config.InitRedis()
+	if err != nil {
+		return err
+	}
+
+	rdb, err = config.CallRedis(rOpt)
 	return nil
 }
 
 func serverRun(cmd *cobra.Command, args []string) error {
+	var err error
 	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello!")
+		job, err := background_job.InitJob("adrian_job", map[string]interface{}{"adrian": 01})
+		if err != nil {
+			fmt.Println("error", err)
+		} else {
+			fmt.Println(job.ID)
+		}
 	})
 
 	server := &http.Server{
@@ -33,7 +48,7 @@ func serverRun(cmd *cobra.Command, args []string) error {
 		ReadHeaderTimeout: 1 * time.Minute,
 	}
 
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,36 @@
+# docker-compose.yml
+version: '3'
+name: sinau_go_craft
+services:
+  postgres:
+    container_name: sinau_go_craft
+    image: 'postgres:latest'
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: sinau_go_craft_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+  elasticsearch:
+    container_name: sinau_go_craft_elasticsearch
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.4.0'
+    volumes:
+      - 'elasticsearch-data:/usr/share/elasticsearch/data'
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      - discovery.type=single-node
+  redis:
+    container_name: sinau_go_craft_redis
+    image: 'redis:5.0.3'
+    volumes:
+      - 'redis-data:/data'
+    ports:
+      - '6379:6379'
+volumes:
+  postgres-data: null
+  elasticsearch-data: null
+  redis-data: null
