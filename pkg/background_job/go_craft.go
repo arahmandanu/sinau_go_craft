@@ -30,3 +30,7 @@ func InitJob(jobName string, args work.Q) (*work.Job, error) {
 
 	return job, nil
 }
+
+func GetRedisPool() *redis.Pool {
+	return redisPool
+}

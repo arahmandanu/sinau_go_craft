@@ -23,7 +23,6 @@ func InitRedis() (*redis.Options, error) {
 }
 
 func CallRedis(redisOptions *redis.Options) (*redis.Client, error) {
-	fmt.Println(redisOptions)
 	RedisClient := redis.NewClient(redisOptions)
 	_, err := RedisClient.Ping(context.Background()).Result()
 	if err != nil {

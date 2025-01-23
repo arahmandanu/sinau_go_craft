@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/arahmandanu/sinau_go_craft/cmd/server"
+	"github.com/arahmandanu/sinau_go_craft/cmd/worker"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -22,4 +23,5 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(server.ServerCmd)
+	rootCmd.AddCommand(worker.ServerCmd)
 }
